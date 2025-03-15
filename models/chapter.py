@@ -10,5 +10,7 @@ class Chapter(Base):
     title = Column(String)
     content = Column(String)
     book_id = Column(Integer, ForeignKey("books.id"))
+    language_id = Column(Integer, ForeignKey("languages.id"))
 
-    # book = relationship("Book", back_populates="chapters")
+    book = relationship("Book", back_populates="chapters")
+    language = relationship("Language")
