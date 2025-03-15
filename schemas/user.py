@@ -1,21 +1,32 @@
-from pydantic import BaseModel, EmailStr
-from typing import Optional
+from pydantic import BaseModel, EmailStr, field_validator
+from typing import Optional, List
+from schemas.book import Book
 
 
 class UserBase(BaseModel):
     email: EmailStr
 
 
-class UserCreate(UserBase):
-    password: str
-
-
-class UserResponse(UserBase):
+class UserInDB(UserBase):
     id: int
     is_admin: bool
 
     class Config:
         orm_mode = True
+
+
+class UserCreate(UserBase):
+    password: str
+
+    @field_validator("password")
+    def password_strength(cls, v):
+        if len(v) < 8:
+            raise ValueError("Password must be at least 8 characters long")
+        return v
+
+
+class UserResponse(UserInDB):
+    pass
 
 
 class UserUpdate(BaseModel):
@@ -24,3 +35,7 @@ class UserUpdate(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class UserWithBooks(UserInDB):
+    books: List[Book] = []
