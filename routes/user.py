@@ -6,8 +6,7 @@ from schemas.user import UserCreate, UserResponse, UserDefaultSchema
 from sqlalchemy.orm import Session
 from typing import List
 
-user_router = APIRouter()
-user_router.tags = ["users"]
+user_router = APIRouter(prefix="/users", tags=["users"])
 
 def get_user_service(db: Session = Depends(get_db)):
     return UserService(UserRepository(db))
