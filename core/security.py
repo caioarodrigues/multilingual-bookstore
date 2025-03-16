@@ -1,44 +1,41 @@
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from core.config import settings
-from fastapi import Depends, HTTPException
-from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 from core.database import get_db
-from models.user import User
+from datetime import datetime, timedelta
+from core.config import settings
+import bcrypt
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
-def verify_password(plain_password: str, hashed_password: str):
-    return pwd_context.verify(plain_password, hashed_password)
+def hash_password(password: str) -> str:
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(password.encode("utf-8"), salt).decode("utf-8")
 
 
-def get_password_hash(password: str):
-    return pwd_context.hash(password)
+def verify_password(password: str, hashed: str) -> bool:
+    try:
+        encoded_pw = password.encode("utf-8")
+        encoded_hashed = hashed.encode("utf-8")
+        
+        return encoded_hashed == encoded_pw
+    except ValueError:
+        print("Error checking password: \n" + ValueError)
+        return False
 
 
-# def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-#    credentials_exception = HTTPException(
-#        status_code=401,
-#        detail="Could not validate credentials"
-#    )
-#    try:
-#        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
-#        user_id: int = payload.get("sub")
-#        if user_id is None:
-#            raise credentials_exception
-#    except JWTError:
-#        raise credentials_exception
-#
-#    user = UserRepository(db).get_user(user_id)
-#    if user is None:
-#        raise credentials_exception
-#    return user
-#
-# def get_current_admin(current_user: User = Depends(get_current_user)):
-#    if not current_user.is_admin:
-#        raise HTTPException(status_code=403, detail="Permission denied")
-#    return current_user
+def create_token(user: dict) -> str:
+    payload = {"user_id": user["id"], "exp": datetime.utcnow() + timedelta(hours=2)}
+    return jwt.encode(payload, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
+
+
+def verify_token(token: str) -> bool:
+    try:
+        jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        return True
+    except jwt.PyJWTError:
+        return False

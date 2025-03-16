@@ -31,13 +31,14 @@ class UserService:
 
         return user
 
-    def get_by_email (self, email: str) -> UserResponse:
+    def get_by_email(self, email: str) -> UserResponse:
         user = self.user_repository.get_user_by_email(email)
 
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
 
         return user
+
     def get_all_users(self) -> List[UserResponse]:
         return self.user_repository.get_all_users()
 

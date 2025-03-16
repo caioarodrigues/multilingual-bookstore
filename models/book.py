@@ -23,11 +23,15 @@ class Book(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, nullable=False)
-    author_id = Column(Integer, ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
+    author_id = Column(
+        Integer, ForeignKey("users.id", ondelete="SET NULL"), nullable=True
+    )
     chapters_count = Column(Integer, nullable=False, default=0)
 
     author = relationship("User", back_populates="books")
-    chapters = relationship("Chapter", back_populates="book", cascade="all, delete-orphan")
+    chapters = relationship(
+        "Chapter", back_populates="book", cascade="all, delete-orphan"
+    )
     languages = relationship("Language", secondary=book_language, backref="books")
     saved_by_users = relationship(
         "User", secondary=user_saved_books, back_populates="saved_books"

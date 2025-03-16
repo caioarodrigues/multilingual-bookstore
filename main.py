@@ -14,7 +14,7 @@ app = FastAPI(title="Multilingual Bookstore API")
 
 Base.metadata.create_all(bind=engine)
 
-app.include_router(book_router)
-app.include_router(user_router)
 app.include_router(auth_router)
+app.include_router(book_router)
 app.include_router(language_router)
+app.include_router(user_router)

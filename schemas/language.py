@@ -20,6 +20,7 @@ class LanguageCreate(LanguageBase):
 class LanguageResponse(LanguageBase):
     id: int
 
+
 class LanguageUpdate(BaseModel):
     name: Optional[str] = None
     abbreviation: Optional[str] = None

@@ -7,6 +7,10 @@ class UserBase(BaseModel):
     email: EmailStr
 
 
+class UserLogin(UserBase):
+    password: str
+
+
 class UserInDB(UserBase):
     id: int
     is_admin: bool
@@ -25,8 +29,12 @@ class UserCreate(UserBase):
         return v
 
 
-class UserResponse(UserInDB):
+class UserDefaultSchema(UserInDB):
     pass
+
+
+class UserResponse(UserInDB):
+    token: str
 
 
 class UserUpdate(BaseModel):

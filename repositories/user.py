@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from models.user import User
 from schemas.user import UserCreate, UserUpdate
-from core.security import get_password_hash
+from core.security import hash_password
 from typing import List
 
 
@@ -21,8 +21,7 @@ class UserRepository:
     def create_user(self, user: UserCreate) -> User:
         db_user = User(
             email=user.email,
-            hashed_password=user.password,
-            # hashed_password=get_password_hash(user.password),
+            hashed_password=hash_password(user.password),
         )
         self.db.add(db_user)
         self.db.commit()

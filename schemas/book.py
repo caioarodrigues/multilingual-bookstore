@@ -5,6 +5,7 @@ from typing import List, TYPE_CHECKING
 if TYPE_CHECKING:
     from .chapter import Chapter
 
+
 class LanguageBase(BaseModel):
     id: int
     name: str
@@ -50,6 +51,7 @@ class Book(BookInDBBase):
 
 class BookWithDetails(Book):
     chapters: List["Chapter"] = []
+
 
 class BookSave(BaseModel):
     book_id: int

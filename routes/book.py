@@ -19,10 +19,10 @@ def get_book_service(db: Session = Depends(get_db)):
 def create_book(
     book_input: BookCreate,
     db: Session = Depends(get_db),
-    #current_user: User = Depends(get_current_active_user),
+    # current_user: User = Depends(get_current_active_user),
     book_service: BookService = Depends(get_book_service),
 ):
-    #if book_input.author_id is None:
+    # if book_input.author_id is None:
     #    book_input.author_id = current_user.id
 
     return book_service.create(db, book_input)
@@ -56,12 +56,12 @@ def update_book(
     book_input: BookCreate,
     book_service: BookService = Depends(get_book_service),
     db: Session = Depends(get_db),
-    #current_user: User = Depends(get_current_active_user),
+    # current_user: User = Depends(get_current_active_user),
 ):
     book = book_service.get(db=db, book_id=book_id)
     if book is None:
         raise HTTPException(status_code=404, detail="Book not found")
-    #if book.author_id != current_user.id:
+    # if book.author_id != current_user.id:
     #    raise HTTPException(
     #        status_code=403, detail="Not authorized to update this book"
     #    )
@@ -73,12 +73,12 @@ def delete_book(
     book_id: int,
     book_service: BookService = Depends(get_book_service),
     db: Session = Depends(get_db),
-    #current_user: User = Depends(get_current_active_user),
+    # current_user: User = Depends(get_current_active_user),
 ):
     book = book_service.get(db=db, book_id=book_id)
     if book is None:
         raise HTTPException(status_code=404, detail="Book not found")
-    #if book.author_id != current_user.id:
+    # if book.author_id != current_user.id:
     #    raise HTTPException(
     #        status_code=403, detail="Not authorized to delete this book"
     #    )
