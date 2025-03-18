@@ -105,8 +105,11 @@ GET /languages - List all available languages
 ```
 GET /users - List all users
 GET /users/me - Get current user profile
-GET /users/{id}/books - List books by an author
+GET /users/{id}/ - List info by user id
+GET /users/books/list-all - List all books saved by user 
+GET /users/{id}/books/ - List books by an specific author id  
 POST /users - Create new user
+POST /users/books/save - Save a new book to a user
 DELETE /users - Remove user
 PATCH /users - Edit user
 ```

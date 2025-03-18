@@ -47,7 +47,7 @@ def get_user_created_books(
     return user_service.get_user_created_books(id)
 
 
-@user_router.get("/", response_model=List[UserDefaultSchema])
+@user_router.get("/list-all", response_model=List[UserDefaultSchema])
 def get_all_users(user_service: UserService = Depends(get_user_service)):
     return user_service.get_all_users()
 
