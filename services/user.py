@@ -48,3 +48,17 @@ class UserService:
         except Exception as e:
             raise HTTPException(status_code=400, detail=str(e))
         return deleted_user
+
+    def list_saved_books(self, user_id: int):
+        try:
+            saved_books = self.user_repository.list_saved_books(user_id)
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=str(e))
+        return saved_books
+
+    def save_book(self, user_id: int, book_id: int):
+        try:
+            saved_book = self.user_repository.save_book(user_id, book_id)
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=str(e))
+        return saved_book

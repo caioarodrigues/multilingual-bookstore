@@ -3,6 +3,7 @@ from models.user import User
 from schemas.user import UserCreate, UserUpdate
 from core.security import hash_password
 from typing import List
+from models.book import Book
 
 
 class UserRepository:
@@ -41,3 +42,15 @@ class UserRepository:
         self.db.commit()
         self.db.refresh(user)
         return user
+
+    def list_saved_books(self, user_id: int):
+        user = self.get_user_by_id(user_id)
+        return user.saved_books
+
+    def save_book(self, user_id: int, book_id: int):
+        user = self.get_user_by_id(user_id)
+        book = self.db.query(Book).filter(Book.id == book_id).first()
+        user.saved_books.append(book)
+        self.db.commit()
+        self.db.refresh(user)
+        return user.saved_books

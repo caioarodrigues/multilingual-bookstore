@@ -8,6 +8,7 @@ from typing import List
 
 user_router = APIRouter(prefix="/users", tags=["users"])
 
+
 def get_user_service(db: Session = Depends(get_db)):
     return UserService(UserRepository(db))
 
@@ -17,6 +18,20 @@ def create_user(
     user_data: UserCreate, user_service: UserService = Depends(get_user_service)
 ):
     return user_service.create_user(user_data)
+
+
+@user_router.post("/books/save")
+def save_book(
+    user_id: int, book_id: int, user_service: UserService = Depends(get_user_service)
+):
+    return user_service.save_book(user_id, book_id)
+
+
+@user_router.get("/books/list-all")
+def list_saved_books(
+    user_id: int, user_service: UserService = Depends(get_user_service)
+):
+    return user_service.list_saved_books(user_id)
 
 
 @user_router.get("/", response_model=List[UserDefaultSchema])

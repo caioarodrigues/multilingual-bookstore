@@ -21,7 +21,7 @@ def verify_password(password: str, hashed: str) -> bool:
     try:
         encoded_pw = password.encode("utf-8")
         encoded_hashed = hashed.encode("utf-8")
-        
+
         return encoded_hashed == encoded_pw
     except ValueError:
         print("Error checking password: \n" + ValueError)
