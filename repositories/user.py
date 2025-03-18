@@ -54,3 +54,7 @@ class UserRepository:
         self.db.commit()
         self.db.refresh(user)
         return user.saved_books
+
+    def get_user_created_books(self, user_id: int):
+        books = self.db.query(Book).filter(Book.author_id == user_id).all()
+        return books

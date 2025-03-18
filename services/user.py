@@ -62,3 +62,7 @@ class UserService:
         except Exception as e:
             raise HTTPException(status_code=400, detail=str(e))
         return saved_book
+
+    def get_user_created_books(self, user_id):
+        books = self.user_repository.get_user_created_books(user_id)
+        return books

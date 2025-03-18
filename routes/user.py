@@ -3,6 +3,7 @@ from services.user import UserService
 from repositories.user import UserRepository
 from core.database import get_db
 from schemas.user import UserCreate, UserResponse, UserDefaultSchema
+from schemas.book import BookResponse
 from sqlalchemy.orm import Session
 from typing import List
 
@@ -32,6 +33,18 @@ def list_saved_books(
     user_id: int, user_service: UserService = Depends(get_user_service)
 ):
     return user_service.list_saved_books(user_id)
+
+
+@user_router.get("/me", response_model=UserDefaultSchema)
+def get_self_info(user_id: int, user_service: UserService = Depends(get_user_service)):
+    return user_service.get_user_by_id(user_id)
+
+
+@user_router.get("/{id}/books", response_model=List[BookResponse])
+def get_user_created_books(
+    id: int, user_service: UserService = Depends(get_user_service)
+):
+    return user_service.get_user_created_books(id)
 
 
 @user_router.get("/", response_model=List[UserDefaultSchema])
