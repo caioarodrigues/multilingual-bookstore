@@ -22,16 +22,11 @@ async def authenticate_user(email: str, password: str, db: Session) -> Optional[
     if not user:
         return None
 
-    authenticated_user = user.get_user_by_email(email)
-    print("Authenticated user:")
-    print(authenticated_user.email + " " + authenticated_user.hashed_password)
-    print(verify_password(password, authenticated_user.hashed_password))
+    valid_user = user.get_user_by_email(email)
 
-    if not authenticated_user:
+    if not valid_user:
         return None
 
-    if authenticated_user and verify_password(
-        password, authenticated_user.hashed_password
-    ):
-        return {"id": authenticated_user.id, "email": authenticated_user.email}
+    if valid_user and verify_password(password, valid_user.hashed_password):
+        return {"id": valid_user.id, "email": valid_user.email}
     return None

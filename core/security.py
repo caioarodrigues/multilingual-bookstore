@@ -22,7 +22,7 @@ def verify_password(password: str, hashed: str) -> bool:
         encoded_pw = password.encode("utf-8")
         encoded_hashed = hashed.encode("utf-8")
 
-        return encoded_hashed == encoded_pw
+        return bcrypt.checkpw(encoded_pw, encoded_hashed)
     except ValueError:
         print("Error checking password: \n" + ValueError)
         return False
