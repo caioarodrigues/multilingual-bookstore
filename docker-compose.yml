@@ -1,7 +1,7 @@
 services:
   multilingual-bookstore:
     build:
-      image: ocaioarodrigues/multilingual-bookstore:latest
+      context: .
       dockerfile: Dockerfile
     restart: always
     volumes:

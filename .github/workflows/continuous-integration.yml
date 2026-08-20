@@ -35,13 +35,14 @@ jobs:
         python-version: 3.12.3
         pip-version: 24.0
 
-    - name: Docker Compose Build
-      working-directory: ./
-      run: docker compose build
+    # - name: Docker Compose Build
+    #   working-directory: ./
+    #   run: docker compose build
+    
+    - name: Build Docker Image
+      run: |
+        docker build -t multilingual-bookstore:latest .
 
-    - name: List Docker Images
-      run: docker images
-      
     - name: List Docker Images
       run: docker images
       
