@@ -1,5 +1,5 @@
 services:
-  backend:
+  multilingual-bookstore:
     build:
       context: .
       dockerfile: Dockerfile
