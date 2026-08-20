@@ -35,8 +35,8 @@ jobs:
 
     - name: Tag and Push Docker Image to Amazon ECR
       run: |
-        docker tag ${{ secrets.DOCKER_USERNAME }}/quick-glossary-frontend:latest ${{ secrets.IMAGE_REPO_URL }}:latest
-        docker tag ${{ secrets.DOCKER_USERNAME }}/quick-glossary-frontend:latest ${{ secrets.IMAGE_REPO_URL }}:${{ github.run_id }}
+        docker tag ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:latest ${{ secrets.IMAGE_REPO_URL }}:latest
+        docker tag ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:latest ${{ secrets.IMAGE_REPO_URL }}:${{ github.run_id }}
 
         docker push ${{ secrets.IMAGE_REPO_URL }}:latest
         docker push ${{ secrets.IMAGE_REPO_URL }}:${{ github.run_id }}
