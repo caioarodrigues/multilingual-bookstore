@@ -39,6 +39,9 @@ jobs:
       working-directory: ./
       run: docker compose build
 
+    - name: List Docker Images
+      run: docker images
+      
     - name: Tag and Push to Docker Hub
       run: |
         docker tag multilingual-bookstore:latest \
