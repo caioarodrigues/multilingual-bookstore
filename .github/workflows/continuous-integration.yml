@@ -41,7 +41,7 @@ jobs:
     
     - name: Build Docker Image
       run: |
-        docker build -t multilingual-bookstore:latest .
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:latest .
 
     - name: List Docker Images
       run: docker images
