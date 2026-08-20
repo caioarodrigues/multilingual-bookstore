@@ -41,14 +41,14 @@ jobs:
 
     - name: Push to Docker Hub Container Registry
       run: |
-        docker tag ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:latest ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:${{ github.run_id }}
+        docker tag multilingual-bookstore:latest ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:${{ github.run_id }}
 
         docker push ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:latest
         docker push ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:${{ github.run_id }}
         
     - name: Tag and Push Docker Image to Amazon ECR
       run: |
-        docker tag ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:latest ${{ secrets.IMAGE_REPO_URL }}:latest
+        docker tag multilingual-bookstore:latest ${{ secrets.IMAGE_REPO_URL }}:latest
         docker tag ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:latest ${{ secrets.IMAGE_REPO_URL }}:${{ github.run_id }}
 
         docker push ${{ secrets.IMAGE_REPO_URL }}:latest
