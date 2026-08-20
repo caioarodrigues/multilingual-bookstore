@@ -42,30 +42,20 @@ jobs:
     - name: List Docker Images
       run: docker images
       
-    - name: Tag and Push to Docker Hub
+    - name: List Docker Images
+      run: docker images
+      
+    - name: Push to Docker Hub Container Registry
       run: |
-        docker tag multilingual-bookstore:latest \
-          ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:latest
+        docker tag ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:latest ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:${{ github.run_id }}
 
-        docker tag multilingual-bookstore:latest \
-          ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:${{ github.run_id }}
-
-        docker push \
-          ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:latest
-
-        docker push \
-          ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:${{ github.run_id }}
-
-    - name: Tag and Push to Amazon ECR
+        docker push ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:${{ github.run_id }}
+        
+    - name: Tag and Push Docker Image to Amazon ECR
       run: |
-        docker tag multilingual-bookstore:latest \
-          ${{ secrets.IMAGE_REPO_URL }}:latest
+        docker tag ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:latest ${{ secrets.IMAGE_REPO_URL }}:latest
+        docker tag ${{ secrets.DOCKER_USERNAME }}/multilingual-bookstore:latest ${{ secrets.IMAGE_REPO_URL }}:${{ github.run_id }}
 
-        docker tag multilingual-bookstore:latest \
-          ${{ secrets.IMAGE_REPO_URL }}:${{ github.run_id }}
-
-        docker push \
-          ${{ secrets.IMAGE_REPO_URL }}:latest
-
-        docker push \
-          ${{ secrets.IMAGE_REPO_URL }}:${{ github.run_id }}
+        docker push ${{ secrets.IMAGE_REPO_URL }}:latest
+        docker push ${{ secrets.IMAGE_REPO_URL }}:${{ github.run_id }}
