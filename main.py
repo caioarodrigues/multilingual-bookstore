@@ -10,7 +10,7 @@ from models.user import User
 from models.book import Book
 from models.chapter import Chapter
 
-app = FastAPI(title="Multilingual Bookstore API")
+app = FastAPI(title="Multilingual Bookstore API foo bar")
 
 Base.metadata.create_all(bind=engine)
 
