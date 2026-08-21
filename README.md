@@ -1,3 +1,5 @@
+[![Docker Image CI](https://github.com/caioarodrigues/multilingual-bookstore/actions/workflows/continuous-integration.yml/badge.svg?branch=main)](https://github.com/caioarodrigues/multilingual-bookstore/actions/workflows/continuous-integration.yml)
+
 # Multilingual Bookstore API
 Choose a language:
 [English](#multilingual-bookstore-api) | [Português](#biblioteca-multilíngue-api)
